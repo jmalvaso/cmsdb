@@ -7,27 +7,33 @@ from cmsdb.campaigns.run3_2022_postEE_v2_nano_tau_v14 import campaign_run3_2022_
 cpn.add_dataset(
         name="wj_incl_madgraph",
         id=220113368,
-#        is_mc=True,
         processes=[procs.wj],
         keys=["/WtoLNu_madgraphMLM","/WtoLNu_madgraphMLM_ext1",],
         n_files=344,
         n_events=683448011,
     )
 
+# cpn.add_dataset(
+#         name="dy_lep_madgraph",
+#         id=220154049,
+#         processes=[procs.dy_lep],
+#         keys=["/DYto2L_M_50_madgraphMLM","/DYto2L_M_50_madgraphMLM_ext1",],
+#         n_files=464,
+#         n_events=494841164,
+#     )
+
 cpn.add_dataset(
-        name="dy_lep_madgraph",
-        id=220154049,
-#        is_mc=True,
-        processes=[procs.dy_lep],
-        keys=["/DYto2L_M_50_madgraphMLM","/DYto2L_M_50_madgraphMLM_ext1",],
-        n_files=464,
-        n_events=494841164,
+        name="dy_lep_amcatnloFXFX",
+        id=220154050,
+        processes=[procs.dy_lep_NLO],
+        keys=["/DYto2L_M_50_amcatnloFXFX","/DYto2L_M_50_amcatnloFXFX_ext1",],
+        n_files=215+364,
+        n_events=143381876+240058361,
     )
 
 cpn.add_dataset(
         name="ww",
         id=220144633,
-#        is_mc=True,
         processes=[procs.ww],
         keys=["/WW",],
         n_files=34,
@@ -37,7 +43,6 @@ cpn.add_dataset(
 cpn.add_dataset(
         name="wz",
         id=220150919,
-#        is_mc=True,
         processes=[procs.wz],
         keys=["/WZ",],
         n_files=17,
@@ -47,7 +52,6 @@ cpn.add_dataset(
 cpn.add_dataset(
         name="zz",
         id=220134326,
-#        is_mc=True,
         processes=[procs.zz],
         keys=["/ZZ",],
         n_files=3,
@@ -57,7 +61,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="wj_1j_madgraph",
 #         id=220110111,
-#         is_mc=True,
 #         processes=[procs.wj_1j],
 #         keys=["/WtoLNu_1J_madgraphMLM",],
 #         n_files=25,
@@ -67,7 +70,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="wj_2j_madgraph",
 #         id=220149908,
-#         is_mc=True,
 #         processes=[procs.wj_2j],
 #         keys=["/WtoLNu_2J_madgraphMLM",],
 #         n_files=29,
@@ -77,7 +79,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="wj_3j_madgraph",
 #         id=220119946,
-#         is_mc=True,
 #         processes=[procs.wj_3j],
 #         keys=["/WtoLNu_3J_madgraphMLM",],
 #         n_files=28,
@@ -87,7 +88,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="wj_4j_madgraph",
 #         id=220131835,
-#         is_mc=True,
 #         processes=[procs.wj_4j],
 #         keys=["/WtoLNu_4J_madgraphMLM",],
 #         n_files=7,
@@ -97,7 +97,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="dy_lep_m10_50_madgraph",
 #         id=220162390,
-#         is_mc=True,
 #         processes=[procs.dy_lep_m10_50],
 #         keys=["/DYto2L_M_10to50_madgraphMLM",],
 #         n_files=215,
@@ -107,7 +106,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="dy_lep_m50_1j_madgraph",
 #         id=220119413,
-#         is_mc=True,
 #         processes=[procs.dy_lep_m50_1j],
 #         keys=["/DYto2L_M_50_1J_madgraphMLM",],
 #         n_files=61,
@@ -117,7 +115,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="dy_lep_m50_2j_madgraph",
 #         id=220140739,
-#         is_mc=True,
 #         processes=[procs.dy_lep_m50_2j],
 #         keys=["/DYto2L_M_50_2J_madgraphMLM",],
 #         n_files=65,
@@ -127,7 +124,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="dy_lep_m50_3j_madgraph",
 #         id=220157082,
-#         is_mc=True,
 #         processes=[procs.dy_lep_m50_3j],
 #         keys=["/DYto2L_M_50_3J_madgraphMLM",],
 #         n_files=44,
@@ -137,7 +133,6 @@ cpn.add_dataset(
 # cpn.add_dataset(
 #         name="dy_lep_m50_4j_madgraph",
 #         id=220153531,
-#         is_mc=True,
 #         processes=[procs.dy_lep_m50_4j],
 #         keys=["/DYto2L_M_50_4J_madgraphMLM",],
 #         n_files=18,

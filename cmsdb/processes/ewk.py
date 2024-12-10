@@ -12,7 +12,7 @@ bound and exclusive in the upper bound, i.e. (a, b) means a <= x < b:
 """
 
 __all__ = [
-    "dy","dy_lep","dy_z2mumu","dy_z2ee","dy_z2tautau",#,"dy_lep_m10to50""dy_lowmass"
+    "dy","dy_z2mumu","dy_z2ee","dy_z2tautau","dy_lep_NLO", #"dy_lep"
     "w","wj",
     "vv","ww","wz","zz"
 ]
@@ -20,16 +20,18 @@ __all__ = [
 
 from order import Process
 from scinum import Number
-#from scripts.get_x_secs import get_xsec_values,save_xsecs_to_file
+from scripts.get_x_sec import get_xsec_values,save_xsecs_to_file
 import cmsdb.constants as const
 
 
 #[https://twiki.cern.ch/twiki/bin/viewauth/CMS/MATRIXCrossSectionsat13p6TeV]
 kfactor_dy=6282.6/5455.0 # LO->NNLO+NLO_EW k-factor computed for 13.6 TeV
+kfactor_dy_nlo = 6282.6/6748.0 # NLO->NNLO+NLO_EW k-factor computed for 13.6 TeV
 kfactor_wj=63425.1/55300 # LO->NNLO+NLO_EW k-factor computed for 13.6 TeV
 kfactor_ww=1.524 # LO->NNLO+NLO_EW computed for 13.6 TeV
 kfactor_zz=1.524 # LO->NNLO+NLO_EW computed for 13.6 TeV
 kfactor_wz=1.414 # LO->NNLO+NLO_EW computed for 13.6 TeV
+   
 
 
 #
@@ -43,36 +45,89 @@ dy = Process(
     xsecs={13.6: Number(0.1)},
 )
 
-dy_lep = dy.add_process(
-    name="dy_lep",
+# dy_lep = dy.add_process(
+#     name="dy_lep",
+#     id=51000,
+#     label=rf"$Z \rightarrow ll$",
+#     xsecs={13: Number(5455.0*kfactor_dy), #FIXME Add proper number for 13TeV
+#         13.6: Number(5455.0*kfactor_dy)},
+# )
+# dy_z2ee = dy_lep.add_process(
+#     name="dy_z2ee",
+#     id=51001,
+#     label=rf"$Z \rightarrow ee$",
+#     xsecs={13.6: Number(5455.0*kfactor_dy)},
+#     color="#b9ac70",
+# )
+# dy_z2mumu = dy_lep.add_process(
+#     name="dy_z2mumu",
+#     id=51004,
+#     label=rf"$Z \rightarrow \mu\mu$",
+#     xsecs={13.6: Number(5455.0*kfactor_dy)},
+#    color="#3399cc",
+# )
+
+# dy_z2tautau = dy_lep.add_process(
+#     name="dy_z2tautau",
+#     id=51005,
+#     label=rf"$Z \rightarrow \tau\tau$+jet fakes",
+#     xsecs={13.6: Number(5455.0*kfactor_dy)},
+#     color="#a172bd",
+# )
+
+dy_lep_NLO = dy.add_process(
+    name="dy_lep_NLO",
     id=51000,
     label=rf"$Z \rightarrow ll$",
-    xsecs={13: Number(5455.0*kfactor_dy), #FIXME Add proper number for 13TeV
-        13.6: Number(5455.0*kfactor_dy)},
+    xsecs={
+        13: Number(6077.22, {
+            "integration": 1.49,
+            "scale": 0.02j,
+            "pdf": 14.78,
+        }),
+        13.6: const.n_leps * Number(2091.7, {
+            "scale": (0.008j, 0.013j),
+            "pdf": 0.01j,
+        }),
+    },
+    aux={
+        "mll": (50.0, const.inf),
+    },
 )
-dy_z2ee = dy_lep.add_process(
+dy_z2ee = dy_lep_NLO.add_process(
     name="dy_z2ee",
     id=51001,
     label=rf"$Z \rightarrow ee$",
-    xsecs={13.6: Number(5455.0*kfactor_dy)},
+    xsecs={13.6: const.n_leps * Number(2091.7, {
+            "scale": (0.008j, 0.013j),
+            "pdf": 0.01j,
+        }),  
+    },
     color="#b9ac70",
 )
-dy_z2mumu = dy_lep.add_process(
+dy_z2mumu = dy_lep_NLO.add_process(
     name="dy_z2mumu",
     id=51004,
     label=rf"$Z \rightarrow \mu\mu$",
-    xsecs={13.6: Number(5455.0*kfactor_dy)},
+    xsecs={13.6: const.n_leps * Number(2091.7, {
+            "scale": (0.008j, 0.013j),
+            "pdf": 0.01j,
+        }),  
+    },
    color="#3399cc",
 )
 
-dy_z2tautau = dy_lep.add_process(
+dy_z2tautau = dy_lep_NLO.add_process(
     name="dy_z2tautau",
     id=51005,
     label=rf"$Z \rightarrow \tau\tau$+jet fakes",
-    xsecs={13.6: Number(5455.0*kfactor_dy)},
+    xsecs={13.6: const.n_leps * Number(2091.7, {
+            "scale": (0.008j, 0.013j),
+            "pdf": 0.01j,
+        }),  
+    },
     color="#a172bd",
 )
-
 # dy_lep_m10to50 = dy.add_process(
 #     name="dy_lep_m10to50",
 #     id=50001,
@@ -1472,3 +1527,9 @@ ww = vv.add_process(
 # # update vvv cross section
 # for cme in [13]:
 #     vvv.set_xsec(cme, www.get_xsec(cme) + wwz.get_xsec(cme) + wzz.get_xsec(cme) + zzz.get_xsec(cme))
+
+# List of ewk processes
+processes = [dy_lep_NLO,dy_z2ee,dy_z2mumu,dy_z2tautau,ww,zz,wz,vv,wj,w]
+from IPython import embed; embed()
+# Save the xsec values to 'top.txt' for energy 13.6 TeV
+save_xsecs_to_file(processes, 'ewk_xsecs.txt', 13.6)
